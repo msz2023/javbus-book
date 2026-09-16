@@ -1,5 +1,3 @@
-<img width="1488" height="785" alt="image" src="https://github.com/user-attachments/assets/e4439499-e5a6-4a36-a106-4563ee0774e4" /><div align="center">
-
 # JavBus Desktop
 
 **一个把 JavBus 搬到桌面上的影片资料库客户端**
