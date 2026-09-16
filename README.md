@@ -78,12 +78,6 @@ npm run dist         # 免打包目录 dist/win-unpacked/（排查打包问题�
 npm run pack         # 免安装单文件 exe：dist/JavBus Desktop <版本>.exe
 ```
 
-打包产物不进仓库。仓库自带 GitHub Actions 工作流（`.github/workflows/build.yml`）：**推送 `v*` 标签**即可在 GitHub 的 Windows 机器上自动打包并挂到 Releases 页面，也可以在 Actions 页手动触发只下载构件。
-
-```bash
-git tag v1.0.0 && git push origin v1.0.0
-```
-
 ### 校验脚本
 
 ```bash
