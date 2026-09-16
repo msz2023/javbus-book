@@ -53,6 +53,7 @@ JavBus Desktop 是一个 Windows 桌面程序，把站点上的影片列表、�
 - Windows 10 / 11（打包目标为 Windows；开发模式在 macOS / Linux 也能跑，但 BitComet 相关功能仅 Windows）
 - Node.js ≥ 18（推荐 22）
 - 能访问站点的代理（国内必需）
+- Bitcomet（需开启远程下载功能）
 
 ### 从源码运行
 
