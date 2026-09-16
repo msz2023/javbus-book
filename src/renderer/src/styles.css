@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-user-drag: none;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    @apply bg-ink-900 text-slate-200 antialiased;
+    font-size: 14px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink-500;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-400;
+  }
+  input,
+  select,
+  textarea {
+    @apply outline-none;
+  }
+  ::selection {
+    background: rgba(244, 63, 127, 0.35);
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-lg border border-white/[.07] bg-ink-800/80 shadow-hud backdrop-blur;
+  }
+
+  /* ---------------- HUD ----------------
+     数据面板风：等宽读数 + 细网格 + 锐角边框。粉色留给「可点的东西」，
+     青色（data）只用于读数，这样一眼能分清操作区和遥测区。*/
+
+  /** 数值读数：等宽 + 等宽数字，避免进度跳动时宽度抖 */
+  .num {
+    @apply font-mono tabular-nums;
+  }
+  /** 遥测读数（青色） */
+  .telemetry {
+    @apply num text-[11px] tracking-tight text-data/90;
+  }
+  /** 小字段名：全大写 + 字距，HUD 里的标签风格 */
+  .tag-label {
+    @apply font-mono text-[10px] uppercase tracking-[.14em] text-slate-500;
+  }
+  /** 番号这类标识符 */
+  .ident {
+    @apply num text-[11px] font-semibold tracking-wide text-accent-soft;
+  }
+
+  /** 面板背景上的细网格，给「技术感」打底 */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /** 状态灯 */
+  .dot {
+    @apply inline-block h-[6px] w-[6px] shrink-0 rounded-full;
+  }
+  .dot-live {
+    @apply dot animate-pulse-dot bg-data shadow-[0_0_6px_rgba(56,224,208,.9)];
+  }
+  .dot-done {
+    @apply dot bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,.8)];
+  }
+  .dot-idle {
+    @apply dot bg-slate-500;
+  }
+  .dot-err {
+    @apply dot bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,.8)];
+  }
+
+  /** 分段进度条：底纹是刻度，走的时候有流动斜纹 */
+  .meter {
+    @apply relative h-[6px] overflow-hidden rounded-sm bg-ink-600;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 8px
+    );
+  }
+  .meter-fill {
+    @apply h-full transition-[width] duration-500;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.16) 0 4px,
+      transparent 4px 8px
+    );
+    background-size: 24px 100%;
+  }
+
+  /** 分段切换控件（视图模式那种） */
+  .seg {
+    @apply flex items-center gap-0.5 rounded-md border border-white/[.07] bg-ink-900/70 p-0.5;
+  }
+  .seg-item {
+    @apply grid h-[26px] w-[30px] place-items-center rounded text-slate-500
+      transition-colors hover:text-slate-200;
+  }
+  .seg-item-on {
+    @apply bg-white/[.08] text-data shadow-[inset_0_1px_0_rgba(255,255,255,.06)];
+  }
+
+  /** 卡片四角的定位标记 */
+  .ticks::before,
+  .ticks::after {
+    content: '';
+    @apply pointer-events-none absolute h-2.5 w-2.5 opacity-0 transition-opacity duration-200;
+    border-color: rgba(56, 224, 208, 0.75);
+  }
+  .ticks::before {
+    @apply left-0 top-0 border-l border-t;
+  }
+  .ticks::after {
+    @apply bottom-0 right-0 border-b border-r;
+  }
+  .group:hover .ticks::before,
+  .group:hover .ticks::after {
+    @apply opacity-100;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-1.5 rounded-md px-3 py-1.5
+      text-[13px] font-medium transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-soft active:scale-[.97];
+  }
+  .btn-ghost {
+    @apply btn bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white active:scale-[.97];
+  }
+  .btn-outline {
+    @apply btn border border-white/10 text-slate-300 hover:border-accent/60 hover:text-white;
+  }
+  /** 遥测/工具类操作：青色描边，和粉色主操作区分开 */
+  .btn-data {
+    @apply btn border border-data/30 bg-data/[.07] text-data
+      hover:border-data/60 hover:bg-data/[.14] active:scale-[.97];
+  }
+  .chip {
+    @apply inline-flex cursor-pointer select-none items-center gap-1 rounded-full border
+      border-white/10 bg-white/[.04] px-2.5 py-1 text-xs text-slate-300
+      transition-colors hover:border-accent/60 hover:text-white;
+  }
+  .chip-on {
+    @apply border-accent/70 bg-accent/15 text-white;
+  }
+  .field {
+    @apply w-full rounded-lg border border-white/10 bg-ink-900/70 px-3 py-2 text-[13px]
+      text-slate-200 placeholder:text-slate-500 focus:border-accent/60;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wide text-slate-400;
+  }
+  .skeleton {
+    @apply relative overflow-hidden bg-ink-700;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 animate-shimmer;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  }
+}
+
+/* 顶部渐隐遮罩，让滚动内容不生硬 */
+.fade-top {
+  mask-image: linear-gradient(to bottom, transparent, black 14px);
+}

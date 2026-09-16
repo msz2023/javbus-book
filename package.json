@@ -1,0 +1,64 @@
+{
+  "name": "javbus-desktop",
+  "version": "1.0.0",
+  "description": "JavBus 桌面客户端 - 影片资料库 / 磁力下载 / 本地播放",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<your-name>/javbus-desktop.git"
+  },
+  "homepage": "https://github.com/<your-name>/javbus-desktop#readme",
+  "main": "./out/main/index.js",
+  "author": "<your-name>",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "dist": "electron-vite build && electron-builder --win --dir",
+    "pack": "electron-vite build && electron-builder --win",
+    "verify": "esbuild scripts/verify-parse.ts --bundle --platform=node --format=cjs --outfile=node_modules/.cache/verify.cjs --external:undici --external:cheerio --log-level=warning && node node_modules/.cache/verify.cjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "verify:code": "esbuild scripts/verify-code.ts --bundle --platform=node --format=cjs --outfile=node_modules/.cache/verify-code.cjs --log-level=warning && node node_modules/.cache/verify-code.cjs",
+    "verify:fill": "esbuild scripts/verify-fill.ts --bundle --platform=node --format=cjs --outfile=node_modules/.cache/verify-fill.cjs --external:undici --external:cheerio --log-level=warning && node node_modules/.cache/verify-fill.cjs",
+    "verify:genre": "esbuild scripts/verify-genre.ts --bundle --platform=node --format=cjs --outfile=node_modules/.cache/verify-genre.cjs --external:undici --external:cheerio --log-level=warning && node node_modules/.cache/verify-genre.cjs",
+    "verify:bc": "esbuild scripts/verify-bitcomet.ts --bundle --platform=node --format=cjs --outfile=node_modules/.cache/verify-bc.cjs --external:undici --external:cheerio --log-level=warning && node node_modules/.cache/verify-bc.cjs"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "undici": "^6.21.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.49",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.11"
+  },
+  "build": {
+    "appId": "local.javbus.desktop",
+    "productName": "JavBus Desktop",
+    "files": [
+      "out/**/*",
+      "resources/**/*"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "portable": {
+      "artifactName": "JavBus Desktop ${version}.exe",
+      "unicode": true
+    }
+  }
+}

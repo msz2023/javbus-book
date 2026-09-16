@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 桌面版界面按宽屏设计：按 1180 逻辑宽度渲染再整体缩放，手机上布局不塌 -->
+    <meta name="viewport" content="width=1180, user-scalable=yes" />
+    <title>JavBus Mobile</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body class="bg-ink-900 text-slate-200">
+    <div id="root"></div>
+    <script src="./assets/react.production.min.js"></script>
+    <script src="./assets/react-dom.production.min.js"></script>
+    <script src="./assets/amd-loader.js"></script>
+    <!-- 安卓适配层必须先于 bundle 定义 window.api -->
+    <script src="./assets/android-adapter.js"></script>
+    <script src="./assets/bundle.js"></script>
+    <script>
+      window.__amdRequire('renderer/src/main')
+    </script>
+  </body>
+</html>

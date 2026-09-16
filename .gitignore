@@ -1,0 +1,28 @@
+# Node / Electron
+node_modules/
+out/
+dist/
+release/
+.verify.cjs
+*.tsbuildinfo
+npm-debug.log*
+.eslintcache
+
+# Android（在 Android Studio 里打开 android/ 会生成这些）
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/app/*.iml
+android/captures/
+android/.kotlin/
+
+# IDE / OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+desktop.ini
